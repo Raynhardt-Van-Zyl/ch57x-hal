@@ -1,0 +1,6 @@
+/target
+/Cargo.lock
+/trash
+*.bin
+*.hex
+/temp_pac

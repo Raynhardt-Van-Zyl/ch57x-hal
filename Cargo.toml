@@ -1,0 +1,71 @@
+[package]
+name = "ch57x-hal"
+version = "0.0.2"
+edition = "2021"
+authors = ["Raynhardt van Zyl <raynhardt.vanzyl@gmail.com>"]
+repository = "https://github.com/Raynhardt-Van-Zyl/ch57x-hal"
+documentation = "https://docs.rs/ch57x-hal"
+homepage = "https://github.com/Raynhardt-Van-Zyl/ch57x-hal"
+categories = ["embedded", "no-std"]
+description = "HAL for the CH57x RISC-V BLE microcontrollers from WCH"
+keywords = ["embedded-hal", "embassy", "ch57x"]
+readme = "README.md"
+license = "MIT/Apache-2.0"
+
+[features]
+default = ["ble", "embassy"]
+embassy = ["dep:embassy-sync"]
+ble = []
+
+[dependencies]
+ch57x-pac = { git = "https://github.com/Raynhardt-Van-Zyl/ch57x-pac", features = ["rt"] }
+
+critical-section = "1.1.2"
+qingke = { version = "0.1.7", features = ["critical-section-impl"] }
+qingke-rt = { version = "0.1.7", features = ["highcode"] }
+
+# qingke = { version = "0.1.7", features = [
+#     "critical-section-impl",
+# ], path = "../qingke" }
+# qingke-rt = { version = "0.1.7", features = [
+#     "highcode",
+# ], path = "../qingke/qingke-rt" }
+
+fugit = "0.3.7"
+nb = "1.1.0"
+embedded-hal-02 = { package = "embedded-hal", version = "0.2.7", features = [
+    "unproven",
+] }
+embedded-hal-1 = { version = "1.0.0", package = "embedded-hal" }
+embedded-hal-nb = "1.0.0"
+embedded-hal-async = "1.0.0"
+
+embassy-sync = { version = "0.5.0", optional = true }
+embassy-time-driver = { version = "0.1.0", features = ["tick-hz-32_768"] }
+
+[dev-dependencies]
+display-interface = "0.4.1"
+display-interface-spi = "0.4.1"
+embedded-graphics = "0.8.1"
+panic-halt = "0.2.0"
+ssd1306 = "0.8.4"
+
+embassy-futures = "0.1.1"
+embassy-executor = { version = "0.5.0", features = [
+    "nightly",
+    "integrated-timers",
+    "arch-riscv32",
+    "executor-thread",
+] }
+embassy-time = { version = "0.3.0" }
+# embassy time driver
+heapless = "0.8.0"
+embedded-alloc = "0.5.0"
+embedded-sdmmc = "0.6.0"
+
+[profile.release]
+# panic = "unwind"
+panic = "abort"
+opt-level = "z"
+lto = true
+codegen-units = 1

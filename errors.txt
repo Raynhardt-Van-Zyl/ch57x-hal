@@ -1,0 +1,197 @@
+warning: unexpected `cfg` condition value: `critical-section`
+   --> C:\SynologyDrive\Personal_Development\ch57x-pac\src\lib.rs:264:11
+    |
+264 |     #[cfg(feature = "critical-section")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `default` and `rt`
+    = help: consider adding `critical-section` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: `ch57x-pac` (lib) generated 1 warning
+   Compiling ch57x-hal v0.0.2 (C:\SynologyDrive\Personal_Development\ch57x-hal)
+warning: unused import: `core::ptr`
+ --> src\ble\gatt.rs:4:5
+  |
+4 | use core::ptr;
+  |     ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0599]: no method named `rb_spi_clock_div` found for mutable reference `&mut ch57x_pac::generic::raw::W<R8Spi0CtrlCfgSpec>` in the current scope
+   --> src\spi.rs:176:59
+    |
+176 |         T::regs().r8_spi0_ctrl_cfg().write(|w| unsafe { w.rb_spi_clock_div().bits(fdiv) });
+    |                                                           ^^^^^^^^^^^^^^^^ method not found in `&mut ch57x_pac::generic::raw::W<R8Spi0CtrlCfgSpec>`
+
+error[E0599]: no method named `r32_stk_sr` found for reference `&ch57x_pac::systick::RegisterBlock` in the current scope
+  --> src\embassy\time_driver_systick.rs:62:16
+   |
+62 |             rb.r32_stk_sr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear
+   |                ^^^^^^^^^^
+   |
+help: there is a method `r32_stk_ctlr` with a similar name
+   |
+62 -             rb.r32_stk_sr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear
+62 +             rb.r32_stk_ctlr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear
+   |
+
+error[E0282]: type annotations needed
+  --> src\embassy\time_driver_systick.rs:62:36
+   |
+62 |             rb.r32_stk_sr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear
+   |                                    ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+62 |             rb.r32_stk_sr().write(|w: /* Type */| w.rb_stk_sr_cntif().bit(false)); // clear
+   |                                     ++++++++++++
+
+error[E0599]: no method named `rb_stk_ctlr_init` found for mutable reference `&mut ch57x_pac::generic::raw::W<R32StkCtlrSpec>` in the current scope
+  --> src\embassy\time_driver_systick.rs:65:19
+   |
+65 |                 w.rb_stk_ctlr_init()
+   |                   ^^^^^^^^^^^^^^^^ method not found in `&mut ch57x_pac::generic::raw::W<R32StkCtlrSpec>`
+
+error[E0599]: no method named `r8_stk_sr` found for reference `&ch57x_pac::systick::RegisterBlock` in the current scope
+  --> src\embassy\time_driver_systick.rs:80:12
+   |
+80 |         rb.r8_stk_sr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear IF
+   |            ^^^^^^^^^ method not found in `&ch57x_pac::systick::RegisterBlock`
+
+error[E0282]: type annotations needed
+  --> src\embassy\time_driver_systick.rs:80:31
+   |
+80 |         rb.r8_stk_sr().write(|w| w.rb_stk_sr_cntif().bit(false)); // clear IF
+   |                               ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+80 |         rb.r8_stk_sr().write(|w: /* Type */| w.rb_stk_sr_cntif().bit(false)); // clear IF
+   |                                ++++++++++++
+
+error[E0599]: no method named `rb_aux_power_adj_dcdc_charge` found for mutable reference `&mut ch57x_pac::generic::raw::W<R8AuxPowerAdjSpec>` in the current scope
+   --> src\lib.rs:139:52
+    |
+139 |             sys.r8_aux_power_adj().modify(|_, w| w.rb_aux_power_adj_dcdc_charge().set_bit());
+    |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut ch57x_pac::generic::raw::W<R8AuxPowerAdjSpec>`
+
+error[E0599]: no method named `rb_aux_power_adj_dcdc_charge` found for mutable reference `&mut ch57x_pac::generic::raw::W<R8AuxPowerAdjSpec>` in the current scope
+   --> src\lib.rs:148:52
+    |
+148 |             sys.r8_aux_power_adj().modify(|_, w| w.rb_aux_power_adj_dcdc_charge().clear_bit());
+    |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut ch57x_pac::generic::raw::W<R8AuxPowerAdjSpec>`
+
+error[E0599]: no method named `rb_keycode` found for mutable reference `&mut ch57x_pac::generic::raw::W<R32PficCfgrSpec>` in the current scope
+   --> src\lib.rs:177:38
+    |
+177 |     pfic.r32_pfic_cfgr().write(|w| w.rb_keycode().bits(KEY3).rb_resetsys().set_bit());
+    |                                      ^^^^^^^^^^
+    |
+help: there is a method `keycode` with a similar name
+    |
+177 -     pfic.r32_pfic_cfgr().write(|w| w.rb_keycode().bits(KEY3).rb_resetsys().set_bit());
+177 +     pfic.r32_pfic_cfgr().write(|w| w.keycode().bits(KEY3).rb_resetsys().set_bit());
+    |
+
+warning: unnecessary `unsafe` block
+  --> src\delay.rs:15:9
+   |
+15 |         unsafe {
+   |         ^^^^^^ unnecessary `unsafe` block
+   |
+   = note: `#[warn(unused_unsafe)]` (part of `#[warn(unused)]`) on by default
+
+warning: unnecessary `unsafe` block
+  --> src\delay.rs:24:9
+   |
+24 |         unsafe {
+   |         ^^^^^^ unnecessary `unsafe` block
+
+warning: unnecessary `unsafe` block
+  --> src\delay.rs:34:13
+   |
+34 |             unsafe {
+   |             ^^^^^^ unnecessary `unsafe` block
+
+error[E0133]: call to unsafe function `generic::<impl FieldWriter<'a, REG, WI, FI, Safety>>::bits` is unsafe and requires unsafe function or block
+   --> src\spi.rs:245:43
+    |
+245 |         rb.r16_spi0_total_cnt().write(|w| w.r16_spi0_total_cnt().bits(words.len() as _));
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error[E0133]: call to unsafe function `generic::<impl ch57x_pac::generic::raw::W<REG>>::bits` is unsafe and requires unsafe function or block
+   --> src\spi.rs:250:41
+    |
+250 |             rb.r8_spi0_fifo().write(|w| w.bits(byte));
+    |                                         ^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning: unnecessary `unsafe` block
+   --> src\sysctl.rs:114:17
+    |
+114 |                 unsafe {
+    |                 ^^^^^^ unnecessary `unsafe` block
+
+warning: unnecessary `unsafe` block
+   --> src\sysctl.rs:123:17
+    |
+123 |                 unsafe {
+    |                 ^^^^^^ unnecessary `unsafe` block
+
+warning: unnecessary `unsafe` block
+   --> src\sysctl.rs:144:21
+    |
+144 |                     unsafe {
+    |                     ^^^^^^ unnecessary `unsafe` block
+
+warning: unnecessary `unsafe` block
+   --> src\sysctl.rs:156:17
+    |
+156 |                 unsafe {
+    |                 ^^^^^^ unnecessary `unsafe` block
+
+warning: unnecessary `unsafe` block
+   --> src\sysctl.rs:170:21
+    |
+170 |                     unsafe {
+    |                     ^^^^^^ unnecessary `unsafe` block
+
+error[E0133]: call to unsafe function `generic::<impl FieldWriter<'a, REG, WI, FI, Safety>>::bits` is unsafe and requires unsafe function or block
+   --> src\uart.rs:335:9
+    |
+335 | /         w.rb_fcr_rx_fifo_clr()
+336 | |             .set_bit()
+337 | |             .rb_fcr_tx_fifo_clr()
+338 | |             .set_bit()
+...   |
+341 | |             .rb_fcr_fifo_trig()
+342 | |             .bits(0b00) // 1 bytes to send
+    | |_______________________^ call to unsafe function
+    |
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error[E0133]: call to unsafe function `generic::<impl FieldWriter<'a, REG, WI, FI, Safety>>::bits` is unsafe and requires unsafe function or block
+   --> src\uart.rs:344:33
+    |
+344 |     rb.r8_uart0_lcr().write(|w| w.rb_lcr_word_sz().bits(config.data_bits as u8));
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error[E0133]: call to unsafe function `generic::<impl FieldWriter<'a, REG, WI, FI, Safety>>::bits` is unsafe and requires unsafe function or block
+   --> src\uart.rs:353:28
+    |
+353 |             .modify(|_, w| w.rb_lcr_par_en().set_bit().rb_lcr_par_mod().bits(config.parity as u8)); },
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+Some errors have detailed explanations: E0133, E0282, E0599.
+For more information about an error, try `rustc --explain E0133`.
+warning: `ch57x-hal` (lib) generated 9 warnings
+error: could not compile `ch57x-hal` (lib) due to 14 previous errors; 9 warnings emitted

@@ -1,0 +1,50 @@
+# ch57x-hal
+
+[![Github Actions][github-workflow]][homepage]
+[![Crates.io][badge-license]][crates]
+[![Crates.io][badge-version]][crates]
+[![docs.rs][badge-docsrs]][docsrs]
+
+[github-workflow]: https://img.shields.io/github/actions/workflow/status/Raynhardt-Van-Zyl/ch57x-hal/rust.yml?style=for-the-badge
+[badge-license]: https://img.shields.io/crates/l/ch57x-hal?style=for-the-badge
+[badge-version]: https://img.shields.io/crates/v/ch57x-hal?style=for-the-badge
+[badge-docsrs]: https://img.shields.io/docsrs/ch57x-hal?style=for-the-badge
+[crates]: https://crates.io/crates/ch57x-hal
+[docsrs]: https://docs.rs/ch57x-hal
+[homepage]: https://github.com/Raynhardt-Van-Zyl/ch57x-hal
+
+HAL for the CH57x RISC-V BLE microcotrollers from WCH.
+
+This crate is under random and active development. DO NOT USE in production.
+
+This should be the reference hal implementation for CH57x.
+
+## Features
+
+- Basic: clock init, delay, interrupt, etc.
+- Dedicated runtime: interrupt table, hardware stack push, highcode support, critical section implementation
+- embassy support
+  - time driver with SysTick, defaults to 32KHz tick
+  - about 7k flash rom overhead
+- GPIO, with async support
+- UART, basic blocking tx, rx
+- RTC, with datetime support
+- SysTick delay (conflicts with embassy time driver)
+
+- ADC, with Temperature sensor, VBAT sensor
+- SPI
+- libISP ROM functions
+- Basic BLE library support
+
+## Usage
+
+Refer `Cargo.toml` and `examples` directory.
+
+## Notes
+
+- `UNDOCUMENTED:` tags in code comments means the information is not from official documents.
+
+## References
+
+- [ch32-rs/ch58x-hal](https://github.com/ch32-rs/ch58x-hal) (original)
+- [Slappy2022/ch58x-ble-rt](https://github.com/Slappy2022/ch58x-ble-rt)
