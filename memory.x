@@ -1,16 +1,58 @@
-/* CH58x */
-MEMORY
-{
-    /* Code Flash, 448KB max */
-  FLASH(rx) : ORIGIN = 0x00000000, LENGTH = 448k
-    /* SRAM, 32KB */
-    /* up to 0x20007FFF */
-  RAM(rwx) : ORIGIN = 0x20000000, LENGTH = 32k
+MEMORY {
+    FLASH : ORIGIN = 0x00000000, LENGTH = 448K
+    RAM : ORIGIN = 0x20000000, LENGTH = 32K
 }
 
-REGION_ALIAS("REGION_TEXT", FLASH);
-REGION_ALIAS("REGION_RODATA", FLASH);
-REGION_ALIAS("REGION_DATA", RAM);
-REGION_ALIAS("REGION_BSS", RAM);
-REGION_ALIAS("REGION_HEAP", RAM);
-REGION_ALIAS("REGION_STACK", RAM);
+SECTIONS {
+    .text : {
+        *(.text .text.*);
+    } > FLASH
+
+    .rodata : {
+        *(.rodata .rodata.*);
+    } > FLASH
+
+    .highcode : {
+        _highcode_vma_start = .;
+        *(.highcode .highcode.*);
+        _highcode_vma_end = .;
+    } > FLASH AT > FLASH
+
+    .data : {
+        _data_start = .;
+        *(.data .data.*);
+        _data_end = .;
+    } > RAM AT > FLASH
+
+    .bss : {
+        _sbss = .;
+        *(.bss .bss.*);
+        _ebss = .;
+    } > RAM
+
+    .stack : {
+        _stack_bottom = .;
+        . = . + 4K;
+        _stack_top = .;
+    } > RAM
+}
+
+_stack_top = ORIGIN(RAM) + LENGTH(RAM);
+
+_highcode_lma = LOADADDR(.highcode);
+_data_lma = LOADADDR(.data);
+_data_vma = ADDR(.data);
+
+ExceptionHandler = DefaultHandler;
+__EXTERNAL_INTERRUPTS = 0;
+DefaultHandler = 0;
+
+TMR0 = 0;
+GPIO_A = 0;
+GPIO_B = 0;
+SPI0 = 0;
+BLEL = 0;
+BLEB = 0;
+USB = 0;
+TMR2 = 0;
+UART0 = 0;

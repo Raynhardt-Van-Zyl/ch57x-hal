@@ -221,7 +221,7 @@ pub struct blePaControlConfig_t {
     pub rx_pin: u32,
 }
 
-#[link(name = "CH57xBLE")]
+#[link(name = "CH58xBLE")]
 extern "C" {
     /// "CH57x_BLE_LIB_V1.9"
     pub static VER_LIB: [core::ffi::c_char; 0];
