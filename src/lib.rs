@@ -194,11 +194,11 @@ pub static mut SERIAL: Option<uart::UartTx<peripherals::Uart1>> = None;
 #[macro_export]
 macro_rules! println {
     ($($arg:tt)*) => {
-        unsafe {
+        {
             use core::fmt::Write;
             use core::writeln;
 
-            if let Some(uart) = $crate::SERIAL.as_mut() {
+            if let Some(uart) = unsafe { (&mut *(&raw mut $crate::SERIAL)).as_mut() } {
                 writeln!(uart, $($arg)*).unwrap();
             }
         }
@@ -206,7 +206,7 @@ macro_rules! println {
 }
 
 pub unsafe fn set_default_serial(serial: uart::UartTx<'static, peripherals::Uart1>) {
-    SERIAL.replace(serial);
+    (&raw mut SERIAL).replace(Some(serial));
 }
 
 pub fn stack_free() -> usize {
@@ -214,5 +214,5 @@ pub fn stack_free() -> usize {
         static mut _ebss: u32;
         static mut _stack_top: u32;
     }
-    unsafe { &mut _stack_top as *mut u32 as usize - &mut _ebss as *mut u32 as usize }
+    &raw mut _stack_top as *mut u32 as usize - &raw mut _ebss as *mut u32 as usize
 }

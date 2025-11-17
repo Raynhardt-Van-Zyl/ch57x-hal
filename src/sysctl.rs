@@ -172,7 +172,6 @@ impl Config {
                     riscv::asm::nop();
                 });
                 if div == 6 {
-                    // 80MHz
                     with_safe_access(|| unsafe {
                         sys.r8_adc_cfg().modify(|_, w| w.bits(0x02));
                     });

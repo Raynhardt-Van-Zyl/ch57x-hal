@@ -27,9 +27,7 @@ impl embedded_hal_1::delay::DelayNs for CycleDelay {
         let cycles = 1000 * clocks().hclk.to_Hz() as u64 / 1_500_000;
 
         while ms > 0 {
-            unsafe {
-                riscv::asm::delay(cycles as u32);
-            }
+            riscv::asm::delay(cycles as u32);
             ms -= 1;
         }
     }

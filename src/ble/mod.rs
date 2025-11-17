@@ -149,7 +149,7 @@ unsafe extern "C" fn hal_tmos_task(task_id: u8, events: u16) -> u16 {
         tmos_start_task(task_id, HAL_REG_INIT_EVENT, HAL_TMOS_TASK_INTERVAL);
         return events ^ HAL_REG_INIT_EVENT;
     } else if events & HAL_PA_INIT_EVENT != 0 {
-        BLE_PAControlInit(&PA_CONFIG);
+        BLE_PAControlInit(unsafe { &PA_CONFIG });
 
         return events ^ HAL_PA_INIT_EVENT;
     } else {

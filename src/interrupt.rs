@@ -176,6 +176,6 @@ pub unsafe trait InterruptExt: InterruptNumber + Copy {
     }
 }
 
-const PRIO_MASK: u8 = 0xf0;
+
 
 unsafe impl<T: InterruptNumber + Copy> InterruptExt for T {}
