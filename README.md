@@ -73,7 +73,7 @@ Add dependency:
 
 ```toml
 [dependencies]
-ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.3" }
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.4" }
 ```
 
 Release process is tracked in `RELEASING.md`.

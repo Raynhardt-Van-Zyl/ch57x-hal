@@ -1,6 +1,6 @@
 [package]
 name = "ch57x-hal-raynhardt"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 rust-version = "1.75"
 authors = ["Raynhardt van Zyl <raynhardt.vanzyl@gmail.com>"]
@@ -35,7 +35,7 @@ name = "ch57x_hal"
 path = "src/lib.rs"
 
 [dependencies]
-ch57x-pac = { version = "0.1.0", features = ["rt"] }
+ch57x-pac = { version = "0.1.1", features = ["rt"] }
 
 critical-section = "1.1.2"
 qingke = { version = "0.1.7", features = ["critical-section-impl"] }
