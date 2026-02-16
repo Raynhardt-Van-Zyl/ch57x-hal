@@ -8,7 +8,7 @@ use hal::rtc::Rtc;
 use hal::uart::{UartRx, UartTx};
 use qingke_rt::highcode;
 
-static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
+static mut SERIAL: Option<UartTx<peripherals::Uart1>> = None;
 
 macro_rules! println {
     ($($arg:tt)*) => {
@@ -41,7 +41,7 @@ fn panic(info: &core::panic::PanicInfo) -> ! {
     use core::fmt::Write;
 
     let pa9 = unsafe { peripherals::PA9::steal() };
-    let uart1 = unsafe { peripherals::UART1::steal() };
+    let uart1 = unsafe { peripherals::Uart1::steal() };
     let mut serial = UartTx::new(uart1, pa9, Default::default()).unwrap();
 
     let _ = writeln!(&mut serial, "\n\n\n{}", info);
@@ -61,12 +61,12 @@ fn main() -> ! {
     // let boot_btn = Input::new(p.PB22, Pull::Up);
     // let rst_btn = Input::new(p.PB23, Pull::Up);
 
-    let uart = UartTx::new(p.UART1, p.PA9, Default::default()).unwrap();
+    let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
     unsafe {
         SERIAL.replace(uart);
     }
 
-    let mut rx = UartRx::new(p.UART2, p.PA6, Default::default()).unwrap();
+    let mut rx = UartRx::new(p.Uart2, p.PA6, Default::default()).unwrap();
 
     let rtc = Rtc::new(p.RTC);
 
