@@ -4,7 +4,7 @@
 use embedded_hal_1::delay::DelayNs;
 use hal::delay::CycleDelay;
 use hal::gpio::{Level, Output, OutputDrive};
-use {ch58x_hal as hal, panic_halt as _};
+use {ch57x_hal as hal, panic_halt as _};
 
 #[qingke_rt::entry]
 fn main() -> ! {

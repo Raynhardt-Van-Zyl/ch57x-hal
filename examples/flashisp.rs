@@ -8,7 +8,7 @@ use qingke_rt::highcode;
 use hal::rtc::{DateTime, Rtc};
 use hal::uart::UartTx;
 use hal::{peripherals, with_safe_access};
-use {ch58x_hal as hal, panic_halt as _};
+use {ch57x_hal as hal, panic_halt as _};
 
 static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
 

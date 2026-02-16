@@ -15,7 +15,7 @@ use hal::rtc::{DateTime, Rtc};
 use hal::sysctl::Config;
 use hal::uart::UartTx;
 use hal::{pac, peripherals, Peripherals};
-use {ch58x_hal as hal, panic_halt as _};
+use {ch57x_hal as hal, panic_halt as _};
 
 #[qingke_rt::entry]
 fn main() -> ! {

@@ -5,7 +5,7 @@
 [![Crates.io][badge-version]][crates]
 [![docs.rs][badge-docsrs]][docsrs]
 
-[github-workflow]: https://img.shields.io/github/actions/workflow/status/Raynhardt-Van-Zyl/ch57x-hal/rust.yml?style=for-the-badge
+[github-workflow]: https://img.shields.io/github/actions/workflow/status/Raynhardt-Van-Zyl/ch57x-hal/ci.yml?style=for-the-badge
 [badge-license]: https://img.shields.io/crates/l/ch57x-hal?style=for-the-badge
 [badge-version]: https://img.shields.io/crates/v/ch57x-hal?style=for-the-badge
 [badge-docsrs]: https://img.shields.io/docsrs/ch57x-hal?style=for-the-badge
@@ -18,6 +18,33 @@ HAL for the CH57x RISC-V BLE microcotrollers from WCH.
 This crate is under random and active development. DO NOT USE in production.
 
 This should be the reference hal implementation for CH57x.
+
+## Development Setup
+
+1. Install Rust target:
+`rustup target add riscv32imac-unknown-none-elf`
+
+2. Optional nightly toolchain (needed by several examples using `#![feature(type_alias_impl_trait)]`):
+`rustup toolchain install nightly`
+
+3. Install a flasher tool used by `.cargo/config.toml`:
+- default runner: `wlink -v flash`
+- alternatives are commented in `.cargo/config.toml`
+
+4. Validate baseline:
+- library: `cargo check`
+- one example at a time: `cargo check --example blinky`
+- flash one example: `cargo run --release --example blinky`
+
+## Current Status
+
+- Library crate compiles on stable with warnings.
+- Many examples are still mid-migration from CH58x style APIs to CH57x and do not all compile yet.
+- Migration tracking docs:
+  - `progress.md`
+  - `plan.md`
+  - `learnings.md`
+  - `docs/ch572ds1-mapping.md`
 
 ## Features
 
@@ -39,6 +66,17 @@ This should be the reference hal implementation for CH57x.
 ## Usage
 
 Refer `Cargo.toml` and `examples` directory.
+
+## Crates.io
+
+Add dependency:
+
+```toml
+[dependencies]
+ch57x-hal = "0.0.2"
+```
+
+Release process is tracked in `RELEASING.md`.
 
 ## Notes
 

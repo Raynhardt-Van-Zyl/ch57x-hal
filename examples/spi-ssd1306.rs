@@ -24,7 +24,7 @@ use hal::{delay_ms, pac, peripherals, with_safe_access};
 use ssd1306::prelude::*;
 use ssd1306::rotation::DisplayRotation;
 use ssd1306::size::DisplaySize128x32;
-use {ch58x_hal as hal, panic_halt as _};
+use {ch57x_hal as hal, panic_halt as _};
 
 static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
 

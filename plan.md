@@ -1,46 +1,48 @@
-# CH58x-HAL to CH57x-HAL Migration Plan
+# CH57x-HAL Plan (CH572 + Embassy)
 
-This document outlines the plan for migrating the `ch58x-hal` to the new `ch57x-hal`.
+This plan is updated to match current repository state.
 
-## Phases
+## Phase 1: Stabilize Baseline
 
-1.  **Initial Setup:**
-    *   Create `plan.md`, `progress.md`, and `learnings.md`.
-    *   Update `Cargo.toml` to use the new `ch57x-pac`.
-    *   Rename the package to `ch57x-hal`.
-    *   Update crate-level documentation and attributes.
+1. Keep `cargo check` green for the library on stable.
+2. Resolve or explicitly document current warnings in `src/`.
+3. Keep README setup instructions aligned with actual toolchain and runner behavior.
 
-2.  **Peripheral Access Crate (PAC) Integration:**
-    *   Replace `ch58x` with `ch57x` throughout the codebase.
-    *   Address breaking changes from the new PAC: GPIO, ADC, RTC are integrated into SYS register block; I2C not available; interrupt names updated (GPIOA->GPIO_A, etc.); peripheral names changed (SYS->Sys, etc.).
+## Phase 2: Datasheet-Driven Mapping
 
-3.  **Peripheral Driver Refactoring:**
-    *   Review and update each peripheral driver in `src/` to align with the `ch57x-pac`.
-    *   **ADC (`adc.rs`):** Updated to use Sys register block.
-    *   **Delay (`delay.rs`):**
-    *   **DMA (`dma.rs`):** No DMA in CH57x, keep as NoDma.
-    *   **GPIO (`gpio.rs`):** Updated to use Sys register block for PA/PB.
-    *   **I2C (`i2c.rs`):** I2C not available in CH57x, commented out.
-    *   **Interrupt (`interrupt.rs`):** Updated interrupt names.
-    *   **ISP (`isp.rs`):**
-    *   **LCD (`lcd.rs`):**
-    *   **RTC (`rtc.rs`):** Already uses Sys.
-    *   **SPI (`spi.rs`):**
-    *   **SysCtl (`sysctl.rs`):**
-    *   **Systick (`systick.rs`):**
-    *   **Timer (`timer.rs`):**
-    *   **UART (`uart.rs`):**
-    *   **BLE (`ble/`):**
+1. Use `docs/ch572ds1-mapping.md` as the source of truth for mapping progress.
+2. For each CH572 peripheral:
+   - verify register/bit semantics against `CH572DS1.PDF`
+   - verify `ch57x-pac` naming and behavior
+   - verify HAL behavior in `src/`
+3. Track unresolved ambiguities as explicit TODOs with chapter/page references.
 
-4.  **Examples Update:**
-    *   Update all examples in the `examples/` directory to work with the new HAL.
-    *   Ensure all examples compile and run correctly on `ch57x` hardware (if possible).
+## Phase 3: Example Triage and Recovery
 
-5.  **Documentation Update:**
-    *   Update `README.md` to reflect the changes.
-    *   Update all documentation comments in the code.
+1. Classify examples into `green`/`yellow`/`red`.
+2. Recover a minimum green set first:
+   - `blinky`
+   - `uart-echo`
+   - `adc_temp`
+3. For Embassy:
+   - migrate one async GPIO/timer example end-to-end
+   - confirm nightly requirements are clearly documented
+4. For BLE:
+   - migrate one peripheral role example end-to-end before broad BLE cleanup
 
-6.  **Final Review and Cleanup:**
-    *   Remove any unused code or files.
-    *   Run `cargo fmt` and `cargo clippy` to ensure code quality.
-    *   Build the project to ensure everything compiles.
+## Phase 4: Validation and CI
+
+1. Define check matrix:
+   - `cargo check` (required)
+   - selected `cargo check --example ...` for green examples (required)
+2. Add a simple script or CI workflow once green examples are identified.
+3. Hardware smoke test each green example on CH572 and capture outcomes in `progress.md`.
+
+## Exit Criteria
+
+- Library builds cleanly (or with documented intentional warnings).
+- At least one green example each for:
+  - basic GPIO/UART
+  - Embassy async
+  - BLE
+- Mapping table has concrete entries for all targeted peripherals.

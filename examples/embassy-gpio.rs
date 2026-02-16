@@ -2,7 +2,7 @@
 #![no_main]
 #![feature(type_alias_impl_trait)]
 
-use ch58x_hal as hal;
+use ch57x_hal as hal;
 use embassy_executor::Spawner;
 use embassy_time::{Duration, Instant, Timer};
 use embedded_hal_nb::serial::Write;

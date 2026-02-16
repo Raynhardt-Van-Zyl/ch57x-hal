@@ -10,3 +10,7 @@ This document records things that were discovered, were incorrect, or required e
 *   Some bit field accessors are prefixed with rb_ for register bits.
 *   Many register write operations require .bits() instead of .variant() for enum-like fields.
 *   Type annotations are often needed in closure parameters for PAC register operations.
+*   `cargo check` for the library can pass while `cargo check --examples` still fails heavily; examples need separate migration tracking.
+*   A large part of example breakage is from stale CH58-era naming/assumptions rather than core HAL code.
+*   Some examples require nightly Rust because they use `#![feature(type_alias_impl_trait)]`.
+*   CH572 datasheet mapping needs a structured checklist; ad-hoc migration misses details and regresses easily.

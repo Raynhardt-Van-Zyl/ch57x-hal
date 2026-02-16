@@ -5,7 +5,7 @@
 use core::ffi::c_void;
 use core::mem::size_of_val;
 
-use ch58x_hal as hal;
+use ch57x_hal as hal;
 use embassy_executor::Spawner;
 use embassy_time::{Delay, Duration, Instant, Timer};
 use hal::ble::ffi::*;

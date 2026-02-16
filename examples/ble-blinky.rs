@@ -8,7 +8,7 @@ use core::mem::{size_of_val, MaybeUninit};
 use core::sync::atomic::{AtomicBool, Ordering};
 use core::{ptr, slice};
 
-use ch58x_hal as hal;
+use ch57x_hal as hal;
 use embassy_executor::Spawner;
 use embassy_futures::select::{select, Either};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;

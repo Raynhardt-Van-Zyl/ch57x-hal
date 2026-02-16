@@ -3,7 +3,7 @@
 #![no_std]
 #![no_main]
 
-use ch58x_hal as hal;
+use ch57x_hal as hal;
 use embedded_hal_1::delay::DelayNs;
 use hal::gpio::{Input, Level, Output, OutputDrive, Pull};
 use hal::peripherals;

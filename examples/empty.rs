@@ -5,7 +5,7 @@ use embedded_hal_1::delay::DelayNs;
 use hal::gpio::{Input, Level, Output, OutputDrive, Pull};
 use hal::peripherals;
 use hal::uart::UartTx;
-use {ch58x_hal as hal, panic_halt as _};
+use {ch57x_hal as hal, panic_halt as _};
 // use hal::interrupt::Interrupt;
 // use hal::rtc::{DateTime, Rtc};
 

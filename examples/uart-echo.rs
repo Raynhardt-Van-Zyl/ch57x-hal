@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use ch58x_hal as hal;
+use ch57x_hal as hal;
 use hal::gpio::{Level, Output, OutputDrive};
 use hal::peripherals;
 use hal::rtc::Rtc;
