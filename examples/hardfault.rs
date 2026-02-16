@@ -15,7 +15,7 @@ use hal::{pac, peripherals, Peripherals};
 use qingke::riscv;
 use {ch57x_hal as hal, panic_halt as _};
 
-static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
+static mut SERIAL: Option<UartTx<peripherals::Uart1>> = None;
 macro_rules! println {
     ($($arg:tt)*) => {
         unsafe {
@@ -77,14 +77,14 @@ fn main() -> ! {
     let mut download_button = Input::new(p.PB22, Pull::Up);
     let mut reset_button = Input::new(p.PB23, Pull::Up);
 
-    let uart = UartTx::new(p.UART1, p.PA9, Default::default()).unwrap();
+    let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
     unsafe { SERIAL.replace(uart) };
 
     println!("\nMCU init ok!");
 
     let mut rtc = Rtc;
 
-    let pfic = unsafe { &*pac::PFIC::PTR };
+    let _pfic = unsafe { &*pac::Pfic::PTR };
 
     rtc.enable_timing(hal::rtc::TimingMode::_2S);
     unsafe {
