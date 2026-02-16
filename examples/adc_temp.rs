@@ -1,20 +1,13 @@
 #![no_std]
 #![no_main]
 
-use core::arch::{asm, global_asm};
 use core::fmt::Write;
 use core::writeln;
 
-use embedded_hal_1::delay::DelayNs;
 use hal::adc::{adc_to_temperature_celsius, Adc};
-use hal::dma::NoDma;
-use hal::gpio::{AnyPin, Input, Level, Output, OutputDrive, Pull};
-use hal::interrupt::Interrupt;
-use hal::isp::EEPROM_BLOCK_SIZE;
-use hal::rtc::{DateTime, Rtc};
-use hal::sysctl::Config;
+use hal::gpio::{Input, Level, Output, OutputDrive, Pull};
+use hal::rtc::Rtc;
 use hal::uart::UartTx;
-use hal::{pac, peripherals, Peripherals};
 use {ch57x_hal as hal, panic_halt as _};
 
 #[qingke_rt::entry]
@@ -28,9 +21,9 @@ fn main() -> ! {
 
     let mut serial = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
 
-    let mut download_button = Input::new(p.PB22, Pull::Up);
-    let mut reset_button = Input::new(p.PB23, Pull::Up);
-    let mut rtc = Rtc {};
+    let download_button = Input::new(p.PB22, Pull::Up);
+    let reset_button = Input::new(p.PB23, Pull::Up);
+    let rtc = Rtc {};
 
     serial.blocking_flush().unwrap();
     //      rtc.set_datatime(DateTime {
