@@ -28,6 +28,7 @@ include = [
 default = ["ble", "embassy"]
 embassy = ["dep:embassy-sync"]
 ble = []
+nightly = []
 
 [dependencies]
 ch57x-pac = { version = "0.1.0", features = ["rt"] }
