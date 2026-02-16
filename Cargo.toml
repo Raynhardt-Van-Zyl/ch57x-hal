@@ -1,11 +1,11 @@
 [package]
-name = "ch57x-hal"
-version = "0.0.2"
+name = "ch57x-hal-raynhardt"
+version = "0.0.3"
 edition = "2021"
 rust-version = "1.75"
 authors = ["Raynhardt van Zyl <raynhardt.vanzyl@gmail.com>"]
 repository = "https://github.com/Raynhardt-Van-Zyl/ch57x-hal"
-documentation = "https://docs.rs/ch57x-hal"
+documentation = "https://docs.rs/ch57x-hal-raynhardt"
 homepage = "https://github.com/Raynhardt-Van-Zyl/ch57x-hal"
 categories = ["embedded", "no-std"]
 description = "HAL for the CH57x RISC-V BLE microcontrollers from WCH"
@@ -29,6 +29,10 @@ default = ["ble", "embassy"]
 embassy = ["dep:embassy-sync"]
 ble = []
 nightly = []
+
+[lib]
+name = "ch57x_hal"
+path = "src/lib.rs"
 
 [dependencies]
 ch57x-pac = { version = "0.1.0", features = ["rt"] }

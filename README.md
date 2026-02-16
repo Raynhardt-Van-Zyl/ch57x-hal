@@ -6,11 +6,11 @@
 [![docs.rs][badge-docsrs]][docsrs]
 
 [github-workflow]: https://img.shields.io/github/actions/workflow/status/Raynhardt-Van-Zyl/ch57x-hal/ci.yml?style=for-the-badge
-[badge-license]: https://img.shields.io/crates/l/ch57x-hal?style=for-the-badge
-[badge-version]: https://img.shields.io/crates/v/ch57x-hal?style=for-the-badge
-[badge-docsrs]: https://img.shields.io/docsrs/ch57x-hal?style=for-the-badge
-[crates]: https://crates.io/crates/ch57x-hal
-[docsrs]: https://docs.rs/ch57x-hal
+[badge-license]: https://img.shields.io/crates/l/ch57x-hal-raynhardt?style=for-the-badge
+[badge-version]: https://img.shields.io/crates/v/ch57x-hal-raynhardt?style=for-the-badge
+[badge-docsrs]: https://img.shields.io/docsrs/ch57x-hal-raynhardt?style=for-the-badge
+[crates]: https://crates.io/crates/ch57x-hal-raynhardt
+[docsrs]: https://docs.rs/ch57x-hal-raynhardt
 [homepage]: https://github.com/Raynhardt-Van-Zyl/ch57x-hal
 
 HAL for the CH57x RISC-V BLE microcotrollers from WCH.
@@ -73,7 +73,7 @@ Add dependency:
 
 ```toml
 [dependencies]
-ch57x-hal = "0.0.2"
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.3" }
 ```
 
 Release process is tracked in `RELEASING.md`.
