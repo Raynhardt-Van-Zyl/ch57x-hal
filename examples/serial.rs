@@ -26,7 +26,7 @@ fn main() -> ! {
     // LED PA8
     let mut blue_led = Output::new(p.PA8, Level::Low, OutputDrive::_5mA);
 
-    let mut serial = UartTx::new(p.UART1, p.PA9, Default::default()).unwrap();
+    let mut serial = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
     //let mut serial = UartTx::new(p.UART3, p.PA5, Default::default()).unwrap();
     //let mut serial = UartTx::new(p.UART0, p.PA14, Default::default()).unwrap();
 
