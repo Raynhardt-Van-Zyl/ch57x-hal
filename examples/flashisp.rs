@@ -1,13 +1,12 @@
 #![no_std]
 #![no_main]
 
-use embedded_hal_1::delay::DelayNs;
 use hal::gpio::{Input, Level, Output, OutputDrive, Pull};
 use qingke_rt::highcode;
 // use hal::interrupt::Interrupt;
-use hal::rtc::{DateTime, Rtc};
+use hal::rtc::Rtc;
 use hal::uart::UartTx;
-use hal::{peripherals, with_safe_access};
+use hal::peripherals;
 use {ch57x_hal as hal, panic_halt as _};
 
 static mut SERIAL: Option<UartTx<peripherals::Uart1>> = None;
@@ -36,8 +35,8 @@ fn main() -> ! {
 
     // GPIO
     let mut led = Output::new(p.PA8, Level::Low, OutputDrive::_5mA);
-    let download_button = Input::new(p.PB22, Pull::Up);
-    let reset_button = Input::new(p.PB23, Pull::Up);
+    let _download_button = Input::new(p.PB22, Pull::Up);
+    let _reset_button = Input::new(p.PB23, Pull::Up);
 
     let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
     unsafe {
