@@ -1,98 +1,82 @@
 #![no_std]
 #![no_main]
-#![feature(type_alias_impl_trait)]
+#![cfg_attr(feature = "nightly", feature(type_alias_impl_trait))]
 
-use ch57x_hal as hal;
-use embassy_executor::Spawner;
-use embassy_time::{Delay, Duration, Instant, Timer};
-use hal::gpio::{AnyPin, Input, Level, Output, OutputDrive, Pin, Pull};
-use hal::peripherals;
-use hal::prelude::*;
-use hal::rtc::Rtc;
-use hal::uart::UartTx;
-
-static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
-
-macro_rules! println {
-    ($($arg:tt)*) => {
-        unsafe {
-            use core::fmt::Write;
-            use core::writeln;
-
-            if let Some(uart) = SERIAL.as_mut() {
-                writeln!(uart, $($arg)*).unwrap();
-            }
-        }
-    }
-}
-
-#[panic_handler]
-fn panic(info: &core::panic::PanicInfo) -> ! {
-    use core::fmt::Write;
-
-    let pa9 = unsafe { peripherals::PA9::steal() };
-    let uart1 = unsafe { peripherals::UART1::steal() };
-    let mut serial = UartTx::new(uart1, pa9, Default::default()).unwrap();
-
-    let _ = writeln!(&mut serial, "\n\n\n{}", info);
-
+#[cfg(not(feature = "nightly"))]
+#[qingke_rt::entry]
+fn main() -> ! {
     loop {}
 }
 
-#[embassy_executor::task]
-async fn blink(pin: AnyPin) {
-    let mut led = Output::new(pin, Level::Low, OutputDrive::_5mA);
-
-    loop {
-        led.set_high();
-        Timer::after(Duration::from_millis(150)).await;
-        led.set_low();
-        Timer::after(Duration::from_millis(150)).await;
-    }
+#[cfg(not(feature = "nightly"))]
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    loop {}
 }
 
-#[embassy_executor::main(entry = "qingke_rt::entry")]
-async fn main(spawner: Spawner) -> ! {
-    let mut config = hal::Config::default();
-    config.clock.use_pll_60mhz();
-    let p = hal::init(config);
-    hal::embassy::init();
+#[cfg(feature = "nightly")]
+mod app {
+    use ch57x_hal as hal;
+    use embassy_executor::Spawner;
+    use embassy_time::{Duration, Instant, Timer};
+    use hal::gpio::{AnyPin, Input, Level, Output, OutputDrive, Pin, Pull};
+    use hal::peripherals;
+    use hal::rtc::Rtc;
+    use hal::uart::UartTx;
+    use hal::println;
 
-    let uart = UartTx::new(p.UART1, p.PA9, Default::default()).unwrap();
-    unsafe {
-        SERIAL.replace(uart);
+    #[panic_handler]
+    fn panic(info: &core::panic::PanicInfo) -> ! {
+        use core::fmt::Write;
+
+        let pa9 = unsafe { peripherals::PA9::steal() };
+        let uart1 = unsafe { peripherals::Uart1::steal() };
+        let mut serial = UartTx::new(uart1, pa9, Default::default()).unwrap();
+        let _ = writeln!(&mut serial, "\n\n\n{}", info);
+        loop {}
     }
 
-    // GPIO
-    spawner.spawn(blink(p.PA8.degrade())).unwrap();
+    #[embassy_executor::task]
+    async fn blink(pin: AnyPin) {
+        let mut led = Output::new(pin, Level::Low, OutputDrive::_5mA);
+        loop {
+            led.set_high();
+            Timer::after(Duration::from_millis(150)).await;
+            led.set_low();
+            Timer::after(Duration::from_millis(150)).await;
+        }
+    }
 
-    let reset_button = Input::new(p.PB23, Pull::Up);
+    #[embassy_executor::main(entry = "qingke_rt::entry")]
+    async fn main(spawner: Spawner) -> ! {
+        let mut config = hal::Config::default();
+        config.clock.use_pll_60mhz();
+        let p = hal::init(config);
+        hal::embassy::init();
 
-    let rtc = Rtc::new(p.RTC);
+        let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
+        unsafe {
+            hal::set_default_serial(uart);
+        }
 
-    println!("\n\nHello World from ch58x-hal!");
-    println!(
-        r#"
-    ______          __
-   / ____/___ ___  / /_  ____ _____________  __
-  / __/ / __ `__ \/ __ \/ __ `/ ___/ ___/ / / /
- / /___/ / / / / / /_/ / /_/ (__  |__  ) /_/ /
-/_____/_/ /_/ /_/_.___/\__,_/____/____/\__, /
-                                      /____/   on CH582F"#
-    );
-    println!("System Clocks: {}", hal::sysctl::clocks().hclk);
-    println!("ChipID: 0x{:02x}", hal::signature::get_chip_id());
-    println!("RTC datetime: {}", rtc.now());
+        spawner.spawn(blink(p.PA8.degrade())).unwrap();
 
-    loop {
-        //led.toggle();
-        println!("inst => {:?}", Instant::now());
-        // Delay.delay_ms(1000_u32); // blocking delay
-        Timer::after(Duration::from_millis(1000)).await;
+        let reset_button = Input::new(p.PB23, Pull::Up);
+        let rtc = Rtc::new(p.RTC);
 
-        if reset_button.is_low() {
-            unsafe {
-                hal::reset();
+        println!("\n\nHello World from ch57x-hal!");
+        println!("System Clocks: {}", hal::sysctl::clocks().hclk);
+        println!("ChipID: 0x{:02x}", hal::signature::get_chip_id());
+        println!("RTC datetime: {}", rtc.now());
+
+        loop {
+            println!("inst => {:?}", Instant::now());
+            Timer::after(Duration::from_millis(1000)).await;
+
+            if reset_button.is_low() {
+                unsafe {
+                    hal::reset();
+                }
             }
         }
     }
