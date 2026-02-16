@@ -9,7 +9,7 @@ use {ch57x_hal as hal, panic_halt as _};
 // use hal::interrupt::Interrupt;
 // use hal::rtc::{DateTime, Rtc};
 
-static mut SERIAL: Option<UartTx<peripherals::UART1>> = None;
+static mut SERIAL: Option<UartTx<peripherals::Uart1>> = None;
 
 macro_rules! println {
     ($($arg:tt)*) => {
@@ -37,7 +37,7 @@ fn main() -> ! {
     let download_button = Input::new(p.PB22, Pull::Up);
     let reset_button = Input::new(p.PB23, Pull::Up);
 
-    let uart = UartTx::new(p.UART1, p.PA9, Default::default()).unwrap();
+    let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
     unsafe {
         SERIAL.replace(uart);
     }
