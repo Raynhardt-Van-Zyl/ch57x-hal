@@ -3,7 +3,7 @@
 
 use core::fmt::Write;
 
-use display_interface::{DataFormat, WriteOnlyDataCommand};
+use display_interface::WriteOnlyDataCommand;
 use display_interface_spi::SPIInterface;
 use embedded_graphics::draw_target::DrawTarget;
 use embedded_graphics::mono_font::ascii::FONT_6X10;
@@ -13,17 +13,14 @@ use embedded_graphics::prelude::*;
 use embedded_graphics::primitives::Line;
 use embedded_graphics::text::{Baseline, Text};
 use embedded_hal_02::spi::Polarity;
-use embedded_hal_1::delay::DelayNs;
-use hal::adc::Adc;
 use hal::gpio::{Input, Level, Output, OutputDrive, Pull};
 use hal::prelude::*;
 use hal::rtc::Rtc;
 use hal::spi::{BitOrder, Spi};
 use hal::uart::UartTx;
-use hal::{delay_ms, pac, peripherals, with_safe_access};
+use hal::{delay_ms, peripherals};
 use ssd1306::prelude::*;
 use ssd1306::rotation::DisplayRotation;
-use ssd1306::size::DisplaySize128x32;
 use {ch57x_hal as hal, panic_halt as _};
 
 static mut SERIAL: Option<UartTx<peripherals::Uart1>> = None;
@@ -62,8 +59,8 @@ fn main() -> ! {
     let p = hal::init(config);
 
     // GPIO
-    let mut led = Output::new(p.PA8, Level::Low, OutputDrive::_5mA);
-    let download_button = Input::new(p.PB22, Pull::Up);
+    let _led = Output::new(p.PA8, Level::Low, OutputDrive::_5mA);
+    let _download_button = Input::new(p.PB22, Pull::Up);
     let reset_button = Input::new(p.PB23, Pull::Up);
 
     let uart = UartTx::new(p.Uart1, p.PA9, Default::default()).unwrap();
@@ -82,7 +79,7 @@ fn main() -> ! {
     spi_config.frequency = 20.MHz();
     spi_config.bit_order = BitOrder::MsbFirst;
     spi_config.clock_polarity = Polarity::IdleLow;
-    let mut spi = Spi::new_txonly(p.Spi0, p.PA13, p.PA14, spi_config);
+    let spi = Spi::new_txonly(p.Spi0, p.PA13, p.PA14, spi_config);
 
     // pin wiring
 
