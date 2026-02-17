@@ -1,9 +1,9 @@
 /*!
-    GPIO_ModeIN_Floating, //浮空输入
-    GPIO_ModeIN_PU,       //上拉输入
-    GPIO_ModeIN_PD,       //下拉输入
-    GPIO_ModeOut_PP_5mA,  //推挽输出最大5mA
-    GPIO_ModeOut_PP_20mA, //推挽输出最大20mA
+    GPIO_ModeIN_Floating, // floating input
+    GPIO_ModeIN_PU,       // pull-up input
+    GPIO_ModeIN_PD,       // pull-down input
+    GPIO_ModeOut_PP_5mA,  // push-pull output (max 5mA)
+    GPIO_ModeOut_PP_20mA, // push-pull output (max 20mA)
 */
 
 #![macro_use]
@@ -704,7 +704,7 @@ pub(crate) mod sealed {
             });
         }
 
-        // R16_PB_INT_MODE[9:8]由 RB_PIN_INTX 选择对应 PB[23:22]或 PB[9:8
+        // R16_PB_INT_MODE[9:8] is selected by RB_PIN_INTX and maps to PB[23:22] or PB[9:8].
         #[inline]
         fn enable_interrupt(&mut self) {
             critical_section::with(|_| {

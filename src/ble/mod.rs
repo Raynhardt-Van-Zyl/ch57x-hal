@@ -187,7 +187,8 @@ pub fn init(
 
     // No SNV (SNVAddr, SNVBlock, SNVNum, readFlashCB, writeFlashCB)
 
-    cfg.SelRTCClock = 0; // use LSE: ( 0 外部(32768Hz)，默认:1：内部(32000Hz)，2：内部(32768Hz)
+    // Select RTC clock source: 0 = external 32.768kHz (LSE), 1 = internal 32kHz, 2 = internal 32.768kHz.
+    cfg.SelRTCClock = 0;
 
     cfg.ConnectNumber = (PERIPHERAL_MAX_CONNECTION & 3) | (CENTRAL_MAX_CONNECTION << 2);
 

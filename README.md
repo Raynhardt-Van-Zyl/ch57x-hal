@@ -72,14 +72,14 @@ This crate is under active development and should currently be treated as experi
 
 ```toml
 [dependencies]
-ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5" }
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.6" }
 ```
 
 Feature examples:
 
 ```toml
 [dependencies]
-ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5", default-features = false, features = ["embassy", "ble"] }
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.6", default-features = false, features = ["embassy", "ble"] }
 ```
 
 See the `examples/` directory for end-to-end usage.
@@ -90,7 +90,7 @@ Add dependency:
 
 ```toml
 [dependencies]
-ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5" }
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.6" }
 ```
 
 Release process is tracked in `RELEASING.md`.

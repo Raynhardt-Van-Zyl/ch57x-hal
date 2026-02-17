@@ -1,6 +1,6 @@
 [package]
 name = "ch57x-hal-raynhardt"
-version = "0.0.5"
+version = "0.0.6"
 edition = "2021"
 rust-version = "1.75"
 authors = ["Raynhardt van Zyl <raynhardt.vanzyl@gmail.com>"]

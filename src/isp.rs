@@ -1,8 +1,8 @@
 //! The libISP583 library.
 /*
 for the target in USER code area on the chip divided into USER code area and BOOT area
-用于具有用户代码区和引导区的芯片、操作目标为用户代码区的情况，
-可以在用户代码中被调用（IAP，擦写自身），也可以在引导代码中被调用（更新用户代码
+This applies when targeting USER code on chips split into USER and BOOT regions.
+It can be called from USER code (IAP/self-update) or from BOOT code (update USER code).
 
 - Flash-ROM feature:
     for store program code, support block erasing, dword and page writing, dword verifying, unit for Length is byte,

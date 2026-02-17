@@ -3,16 +3,16 @@
 use core::num::NonZeroU8;
 
 // pub type bStatus_t = u8;
-// SUCCESS(0x00):指令按预期执行。
-// INVALIDPARAMETER(0x02):无效的连接句柄或请求字段。
-// MSG_BUFFER_NOT_AVAIL (0x04):HCI 缓冲区不可用。请稍后重试。
-// bleNotConnected(0x14):设备未连接。
+// SUCCESS(0x00): command executed as expected.
+// INVALIDPARAMETER(0x02): invalid connection handle or request field.
+// MSG_BUFFER_NOT_AVAIL(0x04): HCI buffer unavailable; retry later.
+// bleNotConnected(0x14): device is not connected.
 // blePending(0x17):
-// 当返回到客户端功能时，服务器或 GATT 子过程正在进行中，有待处理的响应。
-// 返回服务器功能时，来自客户端的确认待处理。
-// bleTimeout(0x16):上一个事务超时。重新连接之前，无法发送 ATT 或 GATT 消息。
-// bleMemAllocError(0x13):发生内存分配错误
-// bleLinkEncrypted(0x19):链接已加密。不要在加密的链接上发送包含身份验证签
+// For client-facing functions, a server/GATT procedure is in progress and response is pending.
+// For server-facing functions, a client confirmation is pending.
+// bleTimeout(0x16): previous transaction timed out; ATT/GATT sends are blocked until reconnect.
+// bleMemAllocError(0x13): memory allocation failed.
+// bleLinkEncrypted(0x19): link already encrypted.
 /*
 #define FAILURE                         0x01   //!< Failure
 #define INVALIDPARAMETER                0x02   //!< Invalid request field
@@ -56,7 +56,7 @@ pub const ATT_BT_UUID_SIZE: u8 = 2;
 /// Size of 128-bit UUID
 pub const ATT_UUID_SIZE: u8 = 16;
 
-/* Tx_POWER define(Accuracy:±2dBm) */
+/* Tx power definitions (accuracy: +/-2dBm) */
 pub const LL_TX_POWEER_MINUS_16_DBM: u8 = 0x01;
 pub const LL_TX_POWEER_MINUS_12_DBM: u8 = 0x02;
 pub const LL_TX_POWEER_MINUS_8_DBM: u8 = 0x04;
@@ -232,7 +232,7 @@ extern "C" {
     #[doc = " @brief   ble register reset and rf calibration\n\n @param   None\n\n @return  None"]
     pub fn BLE_RegInit();
 
-    #[doc = " @brief   generate a valid access address\n\n @param   None.\n\n @return  access address\n the Access Address meets the following requirements:\n It shall have no more than six consecutive zeros or ones.\n It shall not be t he advertising channel packets�� Access Address.\n It shall not be a sequence that differ s from the advertising channel packets' Access Address by only one bit.\n It shall not have all four octets equal.\n It shall have no more  than 24 transitions.\n It shall have a minimum of two transitions in the most significant six bits."]
+    #[doc = " @brief   Generate a valid BLE access address.\n\n @param   None.\n\n @return  Access address.\n The generated access address meets the following requirements:\n - No more than six consecutive zeros or ones.\n - Not equal to the advertising channel access address.\n - Not differing from the advertising channel access address by only one bit.\n - Not all four octets equal.\n - No more than 24 bit transitions.\n - At least two transitions in the most significant six bits."]
     pub fn BLE_AccessAddressGenerate() -> u32;
 
     // lifetime: 'static

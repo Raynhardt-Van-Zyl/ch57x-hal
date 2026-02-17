@@ -6,6 +6,12 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.0.6] - 2026-02-17
+
+### Changed
+- Replaced remaining non-English/garbled comments in HAL source with clear English text.
+- Cleaned BLE FFI doc text to remove encoding artifacts from generated docs.
+
 ## [0.0.5] - 2026-02-17
 
 ### Added

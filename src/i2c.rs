@@ -10,7 +10,8 @@ use fugit::HertzU32 as Hertz;
 use crate::gpio::Pull;
 use crate::{interrupt, into_ref, peripherals, Peripheral};
 
-// Any of BERR=1；ARLO=1；AF=1；OVR=1；PECERR=1； TIMEOUT=1；SMBAlert=1。
+// Error condition if any status bit is set:
+// BERR=1, ARLO=1, AF=1, OVR=1, PECERR=1, TIMEOUT=1, SMBAlert=1.
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Error {
     /// Bus error, BERR
