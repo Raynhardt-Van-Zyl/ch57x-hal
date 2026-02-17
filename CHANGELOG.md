@@ -6,11 +6,15 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-02-17
+
 ### Added
-- Publishing baseline metadata and packaging constraints for crates.io.
+- Crate-level documentation now includes README content for richer docs.rs landing page.
+- Expanded docs.rs metadata (`all-features`, `--cfg docsrs`).
 
 ### Changed
-- Switched `ch57x-pac` dependency from git to crates.io version `0.1.0`.
+- Updated `ch57x-pac` dependency to crates.io version `0.1.2`.
+- Improved README with clearer feature/usage guidance.
 
 ## [0.0.4] - 2026-02-16
 

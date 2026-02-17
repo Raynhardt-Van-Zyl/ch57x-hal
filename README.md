@@ -13,11 +13,16 @@
 [docsrs]: https://docs.rs/ch57x-hal-raynhardt
 [homepage]: https://github.com/Raynhardt-Van-Zyl/ch57x-hal
 
-HAL for the CH57x RISC-V BLE microcotrollers from WCH.
+HAL for CH57x RISC-V BLE microcontrollers from WCH.
 
-This crate is under random and active development. DO NOT USE in production.
+This crate is under active development and should currently be treated as experimental.
 
-This should be the reference hal implementation for CH57x.
+## What This Crate Provides
+
+- CH57x peripheral abstractions built on top of `ch57x-pac`
+- Runtime integration via `qingke-rt`
+- Optional Embassy support (`embassy` feature)
+- Optional BLE bindings (`ble` feature, backed by vendor libraries in `vendor/`)
 
 ## Development Setup
 
@@ -65,7 +70,19 @@ This should be the reference hal implementation for CH57x.
 
 ## Usage
 
-Refer `Cargo.toml` and `examples` directory.
+```toml
+[dependencies]
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5" }
+```
+
+Feature examples:
+
+```toml
+[dependencies]
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5", default-features = false, features = ["embassy", "ble"] }
+```
+
+See the `examples/` directory for end-to-end usage.
 
 ## Crates.io
 
@@ -73,7 +90,7 @@ Add dependency:
 
 ```toml
 [dependencies]
-ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.4" }
+ch57x-hal = { package = "ch57x-hal-raynhardt", version = "0.0.5" }
 ```
 
 Release process is tracked in `RELEASING.md`.

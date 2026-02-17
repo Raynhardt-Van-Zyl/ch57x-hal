@@ -1,5 +1,6 @@
 #![no_std]
 #![recursion_limit = "1024"]
+#![doc = include_str!("../README.md")]
 use core::ptr;
 
 pub use ch57x_pac as pac;

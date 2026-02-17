@@ -4,7 +4,7 @@
 //! in the Bluetooth Assigned Numbers page. Do not change these values.
 //! Changing them will cause Bluetooth interoperability issues.
 //!
-//! Ref: https://www.bluetooth.com/specifications/assigned-numbers/
+//! Ref: <https://www.bluetooth.com/specifications/assigned-numbers/>
 
 // UUID defined
 extern "C" {
